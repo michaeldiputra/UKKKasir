@@ -22,14 +22,21 @@ class PelangganResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getForm()
+    {
+        return [
+            TextInput::make('nama_pelanggan')->required(),
+            TextInput::make('nomor_telepon')->required()->type('tel')->unique(ignoreRecord: true),
+            Textarea::make('alamat')->columnSpanFull()->required(),
+        ];
+    }
+
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                TextInput::make('nama_pelanggan')->required(),
-                TextInput::make('nomor_telepon')->required()->type('tel')->unique(ignoreRecord: true),
-                Textarea::make('alamat')->columnSpanFull()->required(),
-            ]);
+            ->schema(
+                self::getForm()
+            );
     }
 
     public static function table(Table $table): Table
