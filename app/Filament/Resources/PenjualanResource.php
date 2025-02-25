@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PenjualanResource\Pages;
-use App\Filament\Resources\PenjualanResource\RelationManagers;
-use App\Models\Penjualan;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Set;
+use Filament\Forms\Form;
+use App\Models\Penjualan;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\PenjualanResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\PenjualanResource\RelationManagers;
 
 class PenjualanResource extends Resource
 {
@@ -31,8 +32,13 @@ class PenjualanResource extends Resource
                         \App\Filament\Resources\PelangganResource::getForm(),
                     )->createOptionUsing(function (array $data): int {
                         return \App\Models\Pelanggan::create($data)->id;
-                    }),
-                Forms\Components\TextInput::make('total_harga')->prefix('Rp')->nullable()->default('0')->hidden(),
+                    })->reactive()
+                    ->afterStateUpdated(function ($state, Set $set){
+                        $set('nomor_telepon', \App\Models\Pelanggan::find($state)->nomor_telepon);
+                    })
+                    ,
+                Forms\Components\TextInput::make('nomor_telepon')->required()->disabled(),
+                Forms\Components\Hidden::make('total_harga')->default('0'),
             ]);
     }
 

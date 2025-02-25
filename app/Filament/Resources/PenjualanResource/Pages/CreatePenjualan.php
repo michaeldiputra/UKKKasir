@@ -26,7 +26,7 @@ class CreatePenjualan extends CreateRecord
         return route(
             'filament.admin.resources.detailpenjualans.create',
             [
-                'detailpenjualan' => $id
+                'penjualan_id' => $id
             ]
         );
     }

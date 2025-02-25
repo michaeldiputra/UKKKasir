@@ -26,8 +26,8 @@ class ProdukResource extends Resource
         return $form
             ->schema([
                 TextInput::make('nama_produk')->required(),
-                TextInput::make('harga')->required()->prefix('Rp'),
-                TextInput::make('stok')->required(),
+                TextInput::make('harga')->required()->prefix('Rp')->numeric(),
+                TextInput::make('stok')->required()->numeric(),
             ]);
     }
 
