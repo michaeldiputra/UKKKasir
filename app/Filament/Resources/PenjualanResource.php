@@ -36,10 +36,10 @@ class PenjualanResource extends Resource
                     )->createOptionUsing(function (array $data): int {
                         return \App\Models\Pelanggan::create($data)->id;
                     })->reactive()
-                    ->afterStateUpdated(function ($state, Set $set){
+                    ->afterStateUpdated(function ($state, Set $set) {
                         $set('nomor_telepon', \App\Models\Pelanggan::find($state)->nomor_telepon);
                     })
-                    ,
+                ,
                 Forms\Components\TextInput::make('nomor_telepon')->required()->disabled(),
                 Forms\Components\Hidden::make('total_harga')->default('0'),
             ]);
@@ -51,8 +51,11 @@ class PenjualanResource extends Resource
             ->columns([
                 TextColumn::make('pelanggan.nama_pelanggan'),
                 TextColumn::make('tanggal')
-                ->dateTime('d F Y')
-                ->sortable(),
+                    ->dateTime('d F Y')
+                    ->sortable(),
+                TextColumn::make('total_harga')
+                    ->money('IDR')
+                    ->sortable(),
             ])
             ->filters([
                 //

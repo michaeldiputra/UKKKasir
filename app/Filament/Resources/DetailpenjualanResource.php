@@ -70,7 +70,11 @@ class DetailpenjualanResource extends Resource
                     ->afterStateUpdated(function ($state, callable $set, callable $get) {
                         $produk = \App\Models\Produk::find($state);
                         $set('harga', $produk->harga ?? null);
-                
+
+                        // Tambahkan informasi stok
+                        $stokTersedia = $produk->stok ?? 0;
+                        $set('info_stok', "Stok tersedia: $stokTersedia");
+
                         $harga = $produk->harga ?? 0;
                         $jumlahProduk = $get('jumlah_produk') ?? 1;
                         $set('subtotal', $harga * $jumlahProduk);
@@ -78,6 +82,10 @@ class DetailpenjualanResource extends Resource
                 TextInput::make("harga")
                     ->required()
                     ->disabled(),
+                TextInput::make("info_stok")
+                    ->label('Informasi Stok')
+                    ->disabled()
+                    ->dehydrated(false),
                 TextInput::make("jumlah_produk")
                     ->default('1')
                     ->required()
