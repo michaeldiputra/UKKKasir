@@ -6,9 +6,12 @@ use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Set;
 use Filament\Forms\Form;
+use Pages\ViewPenjualan;
 use App\Models\Penjualan;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\PenjualanResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -46,13 +49,16 @@ class PenjualanResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('pelanggan.nama_pelanggan'),
+                TextColumn::make('tanggal')
+                ->dateTime('d F Y')
+                ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

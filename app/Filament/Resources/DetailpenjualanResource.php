@@ -21,6 +21,7 @@ use App\Filament\Resources\DetailpenjualanResource\RelationManagers;
 
 class DetailpenjualanResource extends Resource
 {
+    protected static bool $shouldRegisterNavigation = false;
     protected static ?string $model = Detailpenjualan::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
